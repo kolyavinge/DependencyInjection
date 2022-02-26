@@ -1,17 +1,19 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 
 namespace DependencyInjection
 {
-    class Resolver
+    internal class Resolver
     {
         private BindingContainer _bindingContainer;
+
+        public List<object> Dependencies { get; }
 
         public Resolver(BindingContainer bindingContainer)
         {
             _bindingContainer = bindingContainer;
+            Dependencies = new List<object>();
         }
 
         public object Resolve(Type dependencyType)
@@ -22,8 +24,15 @@ namespace DependencyInjection
             {
                 var constructionMethod = description.ConstructionStrategy.GetMethod();
                 var resolvedParams = constructionMethod.Parameters.Select(param => Resolve(param.Type)).ToArray();
+                Dependencies.AddRange(resolvedParams);
                 constructionMethod.SetParameterValues(resolvedParams);
                 instance = description.MakeInstanceStrategy.MakeInstance(constructionMethod);
+                foreach (var prop in instance.GetType().GetProperties().Where(p => p.GetCustomAttributes(typeof(InjectAttribute), false).Any()))
+                {
+                    var resolvedProp = Resolve(prop.PropertyType);
+                    prop.SetValue(instance, resolvedProp);
+                    Dependencies.Add(resolvedProp);
+                }
             }
 
             return instance;

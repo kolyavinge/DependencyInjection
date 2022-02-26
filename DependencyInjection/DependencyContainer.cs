@@ -7,22 +7,20 @@ namespace DependencyInjection
     public class DependencyContainer : IDisposable
     {
         private readonly BindingContainer _bindingContainer;
-        private readonly Resolver _resolver;
-        private readonly List<object> _allInstances;
+        private readonly HashSet<IDisposable> _disposableInstances;
 
         public DependencyContainer()
         {
             _bindingContainer = new BindingContainer();
-            _resolver = new Resolver(_bindingContainer);
-            _allInstances = new List<object>();
+            _disposableInstances = new HashSet<IDisposable>();
         }
 
         public IBindingDescription Bind<TDependency, TImplementation>()
         {
-            var binding = new BindingDescription(typeof(TDependency), typeof(TImplementation));
-            _bindingContainer.Add(binding);
+            var description = new BindingDescription(typeof(TDependency), typeof(TImplementation));
+            _bindingContainer.AddDescription(description);
 
-            return binding;
+            return description;
         }
 
         public IBindingDescription Bind<TDependency>()
@@ -32,18 +30,17 @@ namespace DependencyInjection
 
         public TDependency Resolve<TDependency>()
         {
-            var instance = (TDependency)_resolver.Resolve(typeof(TDependency));
-            _allInstances.Add(instance);
+            var resolver = new Resolver(_bindingContainer);
+            var instance = resolver.Resolve(typeof(TDependency));
+            if (instance is IDisposable) _disposableInstances.Add((IDisposable)instance);
+            foreach (var d in resolver.Dependencies.OfType<IDisposable>()) _disposableInstances.Add(d);
 
-            return instance;
+            return (TDependency)instance;
         }
 
         public void Dispose()
         {
-            foreach (var disposable in _allInstances.OfType<IDisposable>())
-            {
-                disposable.Dispose();
-            }
+            foreach (var disposable in _disposableInstances) disposable.Dispose();
         }
     }
 }

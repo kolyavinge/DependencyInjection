@@ -6,8 +6,13 @@ namespace DependencyInjection
 {
     public interface IBindingDescription
     {
-        IBindingDescription ToSingleton();
+        IInstanceBindingDescription ToMethod(Func<object> makeFunction);
 
-        IBindingDescription ToMethod(Func<object> makeFunction);
+        void ToSingleton();
+    }
+
+    public interface IInstanceBindingDescription
+    {
+        void ToSingleton();
     }
 }
