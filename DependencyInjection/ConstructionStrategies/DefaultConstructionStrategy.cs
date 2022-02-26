@@ -6,9 +6,16 @@ namespace DependencyInjection.ConstructionStrategies
 {
     internal class DefaultConstructionStrategy : ConstructionStrategy
     {
-        public override ConstructionMethod GetMethod(Type implementationType)
+        private readonly Type _implementationType;
+
+        public DefaultConstructionStrategy(Type implementationType)
         {
-            return new ClassConstructorConstructionMethod(implementationType.GetConstructors().First());
+            _implementationType = implementationType;
+        }
+
+        public override ConstructionMethod GetMethod()
+        {
+            return new ClassConstructorConstructionMethod(_implementationType.GetConstructors().First());
         }
     }
 }

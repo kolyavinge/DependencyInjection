@@ -12,7 +12,7 @@ namespace DependencyInjection.ConstructionStrategies
             _makeFunction = makeFunction;
         }
 
-        public override ConstructionMethod GetMethod(Type implementationType)
+        public override ConstructionMethod GetMethod()
         {
             return new MakeFunctionConstructionMethod(_makeFunction);
         }

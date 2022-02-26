@@ -17,15 +17,15 @@ namespace DependencyInjection
             _allInstances = new List<object>();
         }
 
-        public IBindingOptions Bind<TDependency, TImplementation>()
+        public IBindingDescription Bind<TDependency, TImplementation>()
         {
             var binding = new BindingDescription(typeof(TDependency), typeof(TImplementation));
             _bindingContainer.Add(binding);
 
-            return binding.Options;
+            return binding;
         }
 
-        public IBindingOptions Bind<TDependency>()
+        public IBindingDescription Bind<TDependency>()
         {
             return Bind<TDependency, TDependency>();
         }

@@ -20,13 +20,11 @@ namespace DependencyInjection
 
     class MethodParameter
     {
-        private ParameterInfo _parameterInfo;
-
         public MethodParameter(ParameterInfo parameterInfo)
         {
-            _parameterInfo = parameterInfo;
+            Type = parameterInfo.ParameterType;
         }
 
-        public Type Type => _parameterInfo.ParameterType;
+        public Type Type { get; }
     }
 }

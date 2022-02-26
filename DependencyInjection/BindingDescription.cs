@@ -1,35 +1,34 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
+using DependencyInjection.ConstructionStrategies;
+using DependencyInjection.MakeInstanceStrategies;
 
 namespace DependencyInjection
 {
-    class BindingDescription
+    class BindingDescription : IBindingDescription
     {
-        public BindingOptions Options { get; }
         public Type DependencyType { get; }
         public Type ImplementationType { get; }
+        public ConstructionStrategy ConstructionStrategy { get; private set; }
+        public MakeInstanceStrategy MakeInstanceStrategy { get; private set; }
 
         public BindingDescription(Type dependencyType, Type implementationType)
         {
             DependencyType = dependencyType;
             ImplementationType = implementationType;
-            Options = new BindingOptions();
+            ConstructionStrategy = new DefaultConstructionStrategy(implementationType);
+            MakeInstanceStrategy = DefaultMakeInstanceStrategy.Instance;
         }
 
-        public object GetInstance()
+        public IBindingDescription ToSingleton()
         {
-            return Options.MakeInstanceStrategy.GetInstance();
+            MakeInstanceStrategy = new SingletonMakeInstanceStrategy();
+            return this;
         }
 
-        public object MakeInstance(ConstructionMethod constructionMethod)
+        public IBindingDescription ToMethod(Func<object> makeFunction)
         {
-            return Options.MakeInstanceStrategy.MakeInstance(constructionMethod);
-        }
-
-        public ConstructionMethod GetConstructionMethod()
-        {
-            return Options.ConstructionStrategy.GetMethod(ImplementationType);
+            ConstructionStrategy = new MakeFunctionConstructionStrategy(makeFunction);
+            return this;
         }
     }
 }

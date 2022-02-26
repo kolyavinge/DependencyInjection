@@ -6,6 +6,6 @@ namespace DependencyInjection
 {
     abstract class ConstructionStrategy
     {
-        public abstract ConstructionMethod GetMethod(Type implementationType);
+        public abstract ConstructionMethod GetMethod();
     }
 }
