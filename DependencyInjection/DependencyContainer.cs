@@ -8,21 +8,21 @@ namespace DependencyInjection
     {
         private readonly BindingContainer _bindingContainer;
         private readonly Resolver _resolver;
-        private readonly List<object> _allInstances;
+        private readonly HashSet<object> _allInstances;
 
         public DependencyContainer()
         {
             _bindingContainer = new BindingContainer();
             _resolver = new Resolver(_bindingContainer);
-            _allInstances = new List<object>();
+            _allInstances = new HashSet<object>();
         }
 
         public IBindingDescription Bind<TDependency, TImplementation>()
         {
-            var binding = new BindingDescription(typeof(TDependency), typeof(TImplementation));
-            _bindingContainer.Add(binding);
+            var description = new BindingDescription(typeof(TDependency), typeof(TImplementation));
+            _bindingContainer.AddDescription(description);
 
-            return binding;
+            return description;
         }
 
         public IBindingDescription Bind<TDependency>()

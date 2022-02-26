@@ -4,7 +4,7 @@ using DependencyInjection.MakeInstanceStrategies;
 
 namespace DependencyInjection
 {
-    class BindingDescription : IBindingDescription
+    internal class BindingDescription : IBindingDescription, IInstanceBindingDescription
     {
         public Type DependencyType { get; }
         public Type ImplementationType { get; }
@@ -13,22 +13,21 @@ namespace DependencyInjection
 
         public BindingDescription(Type dependencyType, Type implementationType)
         {
-            DependencyType = dependencyType;
-            ImplementationType = implementationType;
+            DependencyType = dependencyType ?? throw new ArgumentNullException(nameof(dependencyType));
+            ImplementationType = implementationType ?? throw new ArgumentNullException(nameof(implementationType));
             ConstructionStrategy = new DefaultConstructionStrategy(implementationType);
             MakeInstanceStrategy = DefaultMakeInstanceStrategy.Instance;
         }
 
-        public IBindingDescription ToSingleton()
-        {
-            MakeInstanceStrategy = new SingletonMakeInstanceStrategy();
-            return this;
-        }
-
-        public IBindingDescription ToMethod(Func<object> makeFunction)
+        public IInstanceBindingDescription ToMethod(Func<object> makeFunction)
         {
             ConstructionStrategy = new MakeFunctionConstructionStrategy(makeFunction);
             return this;
+        }
+
+        public void ToSingleton()
+        {
+            MakeInstanceStrategy = new SingletonMakeInstanceStrategy();
         }
     }
 }
