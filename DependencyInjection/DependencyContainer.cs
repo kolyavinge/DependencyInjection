@@ -32,7 +32,7 @@ namespace DependencyInjection
         {
             var resolver = new Resolver(_bindingContainer);
             var instance = resolver.Resolve(typeof(TDependency));
-            if (instance is IDisposable) _disposableInstances.Add((IDisposable)instance);
+            if (instance is IDisposable disposable) _disposableInstances.Add(disposable);
             foreach (var d in resolver.Dependencies.OfType<IDisposable>()) _disposableInstances.Add(d);
 
             return (TDependency)instance;

@@ -6,9 +6,14 @@ namespace DependencyInjection
 {
     abstract class ConstructionMethod
     {
-        protected object[] _parameterValues;
+        protected object[]? _parameterValues;
 
-        public List<MethodParameter> Parameters { get; protected set; }
+        public List<MethodParameter> Parameters { get; set; }
+
+        public ConstructionMethod()
+        {
+            Parameters = new List<MethodParameter>();
+        }
 
         public void SetParameterValues(object[] values)
         {

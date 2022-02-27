@@ -6,7 +6,7 @@ namespace DependencyInjection
 {
     abstract class MakeInstanceStrategy
     {
-        public abstract object GetInstance();
+        public abstract object? GetInstance();
 
         public virtual object MakeInstance(ConstructionMethod constructionMethod)
         {

@@ -5,7 +5,7 @@ namespace DependencyInjection.ConstructionMethods
 {
     internal class ClassConstructorConstructionMethod : ConstructionMethod
     {
-        private ConstructorInfo _constructorInfo;
+        private readonly ConstructorInfo _constructorInfo;
 
         public ClassConstructorConstructionMethod(ConstructorInfo constructorInfo)
         {

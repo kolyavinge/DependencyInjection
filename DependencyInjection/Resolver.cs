@@ -6,7 +6,7 @@ namespace DependencyInjection
 {
     internal class Resolver
     {
-        private BindingContainer _bindingContainer;
+        private readonly BindingContainer _bindingContainer;
 
         public List<object> Dependencies { get; }
 

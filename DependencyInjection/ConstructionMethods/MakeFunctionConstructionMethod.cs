@@ -10,7 +10,6 @@ namespace DependencyInjection.ConstructionMethods
         public MakeFunctionConstructionMethod(Func<object> makeFunction)
         {
             _makeFunction = makeFunction;
-            Parameters = new List<MethodParameter>();
         }
 
         public override object Invoke()
