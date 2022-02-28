@@ -13,9 +13,9 @@ namespace DependencyInjection.MakeInstanceStrategies
             return _instance;
         }
 
-        public override object MakeInstance(ConstructionMethod constructionMethod)
+        public override object MakeInstance(ConstructionMethod constructionMethod, ConstructionMethodInvokationContext invokationContext)
         {
-            _instance = base.MakeInstance(constructionMethod);
+            _instance = base.MakeInstance(constructionMethod, invokationContext);
             return _instance;
         }
     }

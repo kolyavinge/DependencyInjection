@@ -1,12 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace DependencyInjection
 {
     public interface IBindingDescription
     {
-        IInstanceBindingDescription ToMethod(Func<object> makeFunction);
+        IInstanceBindingDescription ToMethod(Func<IResolvingProvider, object> makeFunction);
 
         void ToSingleton();
     }

@@ -7,12 +7,14 @@ namespace DependencyInjection
     internal class Resolver
     {
         private readonly BindingContainer _bindingContainer;
+        private readonly ConstructionMethodInvokationContext _invokationContext;
 
         public List<object> Dependencies { get; }
 
-        public Resolver(BindingContainer bindingContainer)
+        public Resolver(BindingContainer bindingContainer, ConstructionMethodInvokationContext invokationContext)
         {
             _bindingContainer = bindingContainer;
+            _invokationContext = invokationContext;
             Dependencies = new List<object>();
         }
 
@@ -26,7 +28,7 @@ namespace DependencyInjection
                 var resolvedParams = constructionMethod.Parameters.Select(param => Resolve(param.Type)).ToArray();
                 Dependencies.AddRange(resolvedParams);
                 constructionMethod.SetParameterValues(resolvedParams);
-                instance = description.MakeInstanceStrategy.MakeInstance(constructionMethod);
+                instance = description.MakeInstanceStrategy.MakeInstance(constructionMethod, _invokationContext);
                 foreach (var prop in instance.GetType().GetProperties().Where(p => p.GetCustomAttributes(typeof(InjectAttribute), false).Any()))
                 {
                     var resolvedProp = Resolve(prop.PropertyType);

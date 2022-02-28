@@ -20,7 +20,7 @@ namespace DependencyInjection
             _parameterValues = values;
         }
 
-        public abstract object Invoke();
+        public abstract object Invoke(ConstructionMethodInvokationContext context);
     }
 
     class MethodParameter

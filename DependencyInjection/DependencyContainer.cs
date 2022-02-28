@@ -4,7 +4,7 @@ using System.Linq;
 
 namespace DependencyInjection
 {
-    public class DependencyContainer : IDisposable
+    public class DependencyContainer : IBindingProvider, IResolvingProvider, IDisposable
     {
         private readonly BindingContainer _bindingContainer;
         private readonly HashSet<IDisposable> _disposableInstances;
@@ -13,6 +13,11 @@ namespace DependencyInjection
         {
             _bindingContainer = new BindingContainer();
             _disposableInstances = new HashSet<IDisposable>();
+        }
+
+        public void InitFromModules(params InjectModule[] modules)
+        {
+            foreach (var module in modules) module.Init(this);
         }
 
         public IBindingDescription Bind<TDependency, TImplementation>()
@@ -30,7 +35,7 @@ namespace DependencyInjection
 
         public TDependency Resolve<TDependency>()
         {
-            var resolver = new Resolver(_bindingContainer);
+            var resolver = new Resolver(_bindingContainer, new ConstructionMethodInvokationContext(this));
             var instance = resolver.Resolve(typeof(TDependency));
             if (instance is IDisposable disposable) _disposableInstances.Add(disposable);
             foreach (var d in resolver.Dependencies.OfType<IDisposable>()) _disposableInstances.Add(d);

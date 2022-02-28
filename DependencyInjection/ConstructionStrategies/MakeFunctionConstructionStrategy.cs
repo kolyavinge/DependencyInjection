@@ -5,16 +5,16 @@ namespace DependencyInjection.ConstructionStrategies
 {
     internal class MakeFunctionConstructionStrategy : ConstructionStrategy
     {
-        private readonly Func<object> _makeFunction;
+        private readonly ConstructionMethod _constructionMethod;
 
-        public MakeFunctionConstructionStrategy(Func<object> makeFunction)
+        public MakeFunctionConstructionStrategy(Func<IResolvingProvider, object> makeFunction)
         {
-            _makeFunction = makeFunction;
+            _constructionMethod = new MakeFunctionConstructionMethod(makeFunction);
         }
 
         public override ConstructionMethod GetMethod()
         {
-            return new MakeFunctionConstructionMethod(_makeFunction);
+            return _constructionMethod;
         }
     }
 }

@@ -66,7 +66,7 @@ namespace DependencyInjection.Tests
         [Test]
         public void MakeFunctionInstance()
         {
-            _container.Bind<IDependency, DependencyImplementation>().ToMethod(() => new DependencyImplementation { Field = 123 });
+            _container.Bind<IDependency, DependencyImplementation>().ToMethod(provider => new DependencyImplementation { Field = 123 });
             var instance1 = _container.Resolve<IDependency>();
             var instance2 = _container.Resolve<IDependency>();
             Assert.True(instance1 != instance2);

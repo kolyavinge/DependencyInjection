@@ -19,7 +19,7 @@ namespace DependencyInjection
             MakeInstanceStrategy = DefaultMakeInstanceStrategy.Instance;
         }
 
-        public IInstanceBindingDescription ToMethod(Func<object> makeFunction)
+        public IInstanceBindingDescription ToMethod(Func<IResolvingProvider, object> makeFunction)
         {
             ConstructionStrategy = new MakeFunctionConstructionStrategy(makeFunction);
             return this;

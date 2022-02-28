@@ -8,9 +8,9 @@ namespace DependencyInjection
     {
         public abstract object? GetInstance();
 
-        public virtual object MakeInstance(ConstructionMethod constructionMethod)
+        public virtual object MakeInstance(ConstructionMethod constructionMethod, ConstructionMethodInvokationContext invokationContext)
         {
-            return constructionMethod.Invoke();
+            return constructionMethod.Invoke(invokationContext);
         }
     }
 }

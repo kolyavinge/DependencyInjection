@@ -5,16 +5,16 @@ namespace DependencyInjection.ConstructionMethods
 {
     internal class MakeFunctionConstructionMethod : ConstructionMethod
     {
-        private readonly Func<object> _makeFunction;
+        private readonly Func<IResolvingProvider, object> _makeFunction;
 
-        public MakeFunctionConstructionMethod(Func<object> makeFunction)
+        public MakeFunctionConstructionMethod(Func<IResolvingProvider, object> makeFunction)
         {
             _makeFunction = makeFunction;
         }
 
-        public override object Invoke()
+        public override object Invoke(ConstructionMethodInvokationContext context)
         {
-            return _makeFunction();
+            return _makeFunction(context.ResolvingProvider);
         }
     }
 }
