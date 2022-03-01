@@ -1,4 +1,5 @@
-﻿using DependencyInjection.Tests.Examples;
+﻿using System;
+using DependencyInjection.Tests.Examples;
 using NUnit.Framework;
 
 namespace DependencyInjection.Tests
@@ -33,6 +34,36 @@ namespace DependencyInjection.Tests
         }
 
         [Test]
+        public void BindResolve_SameInterfaces()
+        {
+            _container.Bind<IDependency, IDependency>();
+            try
+            {
+                _container.Resolve<IDependency>();
+                Assert.Fail();
+            }
+            catch (DependencyContainerException e)
+            {
+                Assert.AreEqual("Type 'DependencyInjection.Tests.Examples.IDependency' cannot be constructed", e.Message);
+            }
+        }
+
+        [Test]
+        public void BindResolve_SameInterfaces2()
+        {
+            _container.Bind<IDependency>();
+            try
+            {
+                _container.Resolve<IDependency>();
+                Assert.Fail();
+            }
+            catch (DependencyContainerException e)
+            {
+                Assert.AreEqual("Type 'DependencyInjection.Tests.Examples.IDependency' cannot be constructed", e.Message);
+            }
+        }
+
+        [Test]
         public void Dispose()
         {
             _container.Bind<IDependency, DependencyImplementation>();
@@ -48,6 +79,42 @@ namespace DependencyInjection.Tests
         {
             _container.Bind<IDependency, DependencyImplementation>();
             _container.Bind<ISomeClass, SomeClassImplementation>();
+            var instance = _container.Resolve<ISomeClass>();
+            Assert.False(instance.Dependency.IsDisposed);
+            _container.Dispose();
+            Assert.True(instance.Dependency.IsDisposed);
+        }
+
+        [Test]
+        public void DisposeMethodNull_Error()
+        {
+            try
+            {
+                _container.Bind<IDependency>().ToMethod(null);
+                Assert.Fail();
+            }
+            catch (DependencyContainerException e)
+            {
+                Assert.AreEqual("MakeFunction cannot be null", e.Message);
+            }
+        }
+
+        [Test]
+        public void DisposeMethod()
+        {
+            _container.Bind<IDependency>().ToMethod(_ => new DependencyImplementation());
+            var instance = _container.Resolve<IDependency>();
+            Assert.NotNull(instance);
+            Assert.False(instance.IsDisposed);
+            _container.Dispose();
+            Assert.True(instance.IsDisposed);
+        }
+
+        [Test]
+        public void DisposeMethodInner()
+        {
+            _container.Bind<IDependency>().ToMethod(_ => new DependencyImplementation());
+            _container.Bind<ISomeClass>().ToMethod(p => new SomeClassImplementation(p.Resolve<IDependency>()));
             var instance = _container.Resolve<ISomeClass>();
             Assert.False(instance.Dependency.IsDisposed);
             _container.Dispose();
@@ -115,6 +182,15 @@ namespace DependencyInjection.Tests
             var instance = _container.Resolve<ISomeClassForAttribute>();
             Assert.NotNull(instance.DependencyForAttribute1);
             Assert.NotNull(instance.DependencyForAttribute2);
+        }
+
+        [Test]
+        public void InitFromModule()
+        {
+            _container.InitFromModules(new TestInjectModule());
+            var instance = _container.Resolve<ISomeClass>();
+            Assert.NotNull(instance);
+            Assert.NotNull(instance.Dependency);
         }
     }
 }

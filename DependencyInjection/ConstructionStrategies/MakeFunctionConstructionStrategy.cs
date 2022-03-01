@@ -9,6 +9,10 @@ namespace DependencyInjection.ConstructionStrategies
 
         public MakeFunctionConstructionStrategy(Func<IResolvingProvider, object> makeFunction)
         {
+            if (makeFunction == null)
+            {
+                throw new DependencyContainerException("MakeFunction cannot be null");
+            }
             _constructionMethod = new MakeFunctionConstructionMethod(makeFunction);
         }
 

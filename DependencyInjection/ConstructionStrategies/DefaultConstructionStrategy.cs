@@ -6,16 +6,20 @@ namespace DependencyInjection.ConstructionStrategies
 {
     internal class DefaultConstructionStrategy : ConstructionStrategy
     {
-        private readonly Type _implementationType;
+        private readonly ConstructionMethod _constructionMethod;
 
         public DefaultConstructionStrategy(Type implementationType)
         {
-            _implementationType = implementationType;
+            if (implementationType.IsInterface)
+            {
+                throw new DependencyContainerException($"Type '{implementationType}' cannot be constructed");
+            }
+            _constructionMethod = new ClassConstructorConstructionMethod(implementationType.GetConstructors().First());
         }
 
         public override ConstructionMethod GetMethod()
         {
-            return new ClassConstructorConstructionMethod(_implementationType.GetConstructors().First());
+            return _constructionMethod;
         }
     }
 }
