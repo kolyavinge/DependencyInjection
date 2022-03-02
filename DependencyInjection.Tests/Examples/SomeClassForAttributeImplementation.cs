@@ -4,7 +4,7 @@ using System.Text;
 
 namespace DependencyInjection.Tests.Examples
 {
-    public class SomeClassImplementationForAttribute : ISomeClassForAttribute
+    public class SomeClassForAttributeImplementation : ISomeClassForAttribute
     {
         [Inject]
         public IDependencyForAttribute DependencyForAttribute1 { get; set; }

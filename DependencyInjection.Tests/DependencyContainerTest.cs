@@ -177,11 +177,22 @@ namespace DependencyInjection.Tests
         [Test]
         public void ResolveAttribute()
         {
-            _container.Bind<IDependencyForAttribute, DependencyImplementationForAttribute>();
-            _container.Bind<ISomeClassForAttribute, SomeClassImplementationForAttribute>();
+            _container.Bind<IDependencyForAttribute, DependencyForAttributeImplementation>();
+            _container.Bind<ISomeClassForAttribute, SomeClassForAttributeImplementation>();
             var instance = _container.Resolve<ISomeClassForAttribute>();
             Assert.NotNull(instance.DependencyForAttribute1);
             Assert.NotNull(instance.DependencyForAttribute2);
+        }
+
+        [Test]
+        public void ResolveAttributeRecursive()
+        {
+            _container.Bind<IDependencyRecursiveA, DependencyRecursiveAImplementation>();
+            _container.Bind<IDependencyRecursiveB, DependencyRecursiveBImplementation>();
+            var instanceA = _container.Resolve<IDependencyRecursiveA>();
+            var instanceB = _container.Resolve<IDependencyRecursiveB>();
+            Assert.NotNull(instanceA.DependencyRecursiveB);
+            Assert.NotNull(instanceB.DependencyRecursiveA);
         }
 
         [Test]

@@ -20,24 +20,39 @@ namespace DependencyInjection
 
         public object Resolve(Type dependencyType)
         {
+            var instance = ResolveConstructionMethod(dependencyType);
+            ResolveProperties(Dependencies.Union(new[] { instance }));
+
+            return instance;
+        }
+
+        private object ResolveConstructionMethod(Type dependencyType)
+        {
             var description = _bindingContainer.GetDescription(dependencyType);
             var instance = description.MakeInstanceStrategy.GetInstance();
             if (instance == null)
             {
                 var constructionMethod = description.ConstructionStrategy.GetMethod();
-                var resolvedParams = constructionMethod.Parameters.Select(param => Resolve(param.Type)).ToArray();
+                var resolvedParams = constructionMethod.Parameters.Select(param => ResolveConstructionMethod(param.Type)).ToArray();
                 Dependencies.AddRange(resolvedParams);
                 constructionMethod.SetParameterValues(resolvedParams);
                 instance = description.MakeInstanceStrategy.MakeInstance(constructionMethod, _invokationContext);
+            }
+
+            return instance;
+        }
+
+        private void ResolveProperties(IEnumerable<object> instances)
+        {
+            foreach (var instance in instances)
+            {
                 foreach (var prop in instance.GetType().GetProperties().Where(p => p.GetCustomAttributes(typeof(InjectAttribute), false).Any()))
                 {
-                    var resolvedProp = Resolve(prop.PropertyType);
+                    var resolvedProp = ResolveConstructionMethod(prop.PropertyType);
                     prop.SetValue(instance, resolvedProp);
                     Dependencies.Add(resolvedProp);
                 }
             }
-
-            return instance;
         }
     }
 }

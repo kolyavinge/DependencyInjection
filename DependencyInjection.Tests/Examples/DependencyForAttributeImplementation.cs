@@ -4,7 +4,7 @@ using System.Text;
 
 namespace DependencyInjection.Tests.Examples
 {
-    public class DependencyImplementationForAttribute : IDependencyForAttribute
+    public class DependencyForAttributeImplementation : IDependencyForAttribute
     {
     }
 }

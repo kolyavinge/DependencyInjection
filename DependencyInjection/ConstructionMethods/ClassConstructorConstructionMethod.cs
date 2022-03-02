@@ -15,7 +15,7 @@ namespace DependencyInjection.ConstructionMethods
 
         public override object Invoke(ConstructionMethodInvokationContext context)
         {
-            return _constructorInfo.Invoke(_parameterValues);
+            return _constructorInfo.Invoke(_parameterValues!);
         }
     }
 }
