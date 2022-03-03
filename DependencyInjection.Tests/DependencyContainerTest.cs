@@ -185,17 +185,6 @@ namespace DependencyInjection.Tests
         }
 
         [Test]
-        public void ResolveAttributeRecursive()
-        {
-            _container.Bind<IDependencyRecursiveA, DependencyRecursiveAImplementation>();
-            _container.Bind<IDependencyRecursiveB, DependencyRecursiveBImplementation>();
-            var instanceA = _container.Resolve<IDependencyRecursiveA>();
-            var instanceB = _container.Resolve<IDependencyRecursiveB>();
-            Assert.NotNull(instanceA.DependencyRecursiveB);
-            Assert.NotNull(instanceB.DependencyRecursiveA);
-        }
-
-        [Test]
         public void InitFromModule()
         {
             _container.InitFromModules(new TestInjectModule());
