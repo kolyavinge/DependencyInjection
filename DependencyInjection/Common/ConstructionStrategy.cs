@@ -1,10 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using DependencyInjection.Common;
 
-namespace DependencyInjection
+namespace DependencyInjection.Common
 {
-    abstract class ConstructionStrategy
+    internal abstract class ConstructionStrategy
     {
         public abstract ConstructionMethod GetMethod();
     }

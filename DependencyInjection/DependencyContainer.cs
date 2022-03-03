@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using DependencyInjection.Common;
 
 namespace DependencyInjection
 {
@@ -35,7 +36,7 @@ namespace DependencyInjection
 
         public TDependency Resolve<TDependency>()
         {
-            var resolver = new Resolver(_bindingContainer, new ConstructionMethodInvokationContext(this));
+            var resolver = new Resolver(_bindingContainer, new InvokationContext(this));
             var instance = resolver.Resolve(typeof(TDependency));
             if (instance is IDisposable disposable) _disposableInstances.Add(disposable);
             foreach (var d in resolver.Dependencies.OfType<IDisposable>()) _disposableInstances.Add(d);

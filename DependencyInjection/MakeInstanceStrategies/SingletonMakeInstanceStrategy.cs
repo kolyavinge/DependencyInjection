@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using DependencyInjection.Common;
 
 namespace DependencyInjection.MakeInstanceStrategies
 {
@@ -13,7 +14,7 @@ namespace DependencyInjection.MakeInstanceStrategies
             return _instance;
         }
 
-        public override object MakeInstance(ConstructionMethod constructionMethod, ConstructionMethodInvokationContext invokationContext)
+        public override object MakeInstance(ConstructionMethod constructionMethod, InvokationContext invokationContext)
         {
             _instance = base.MakeInstance(constructionMethod, invokationContext);
             return _instance;

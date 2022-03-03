@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace DependencyInjection
+namespace DependencyInjection.Common
 {
     internal class BindingContainer
     {

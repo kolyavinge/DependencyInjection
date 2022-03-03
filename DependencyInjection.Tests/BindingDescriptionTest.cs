@@ -1,4 +1,5 @@
 ﻿using System;
+using DependencyInjection.Common;
 using DependencyInjection.Tests.Examples;
 using NUnit.Framework;
 

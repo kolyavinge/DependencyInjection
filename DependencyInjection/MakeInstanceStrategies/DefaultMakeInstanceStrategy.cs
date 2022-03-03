@@ -1,4 +1,6 @@
-﻿namespace DependencyInjection.MakeInstanceStrategies
+﻿using DependencyInjection.Common;
+
+namespace DependencyInjection.MakeInstanceStrategies
 {
     internal class DefaultMakeInstanceStrategy : MakeInstanceStrategy
     {

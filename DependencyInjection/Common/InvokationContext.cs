@@ -2,13 +2,13 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace DependencyInjection
+namespace DependencyInjection.Common
 {
-    internal class ConstructionMethodInvokationContext
+    internal class InvokationContext
     {
         public IResolvingProvider ResolvingProvider { get; }
 
-        public ConstructionMethodInvokationContext(IResolvingProvider resolvingProvider)
+        public InvokationContext(IResolvingProvider resolvingProvider)
         {
             ResolvingProvider = resolvingProvider;
         }

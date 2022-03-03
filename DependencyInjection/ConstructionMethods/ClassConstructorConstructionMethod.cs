@@ -1,5 +1,6 @@
 ﻿using System.Linq;
 using System.Reflection;
+using DependencyInjection.Common;
 
 namespace DependencyInjection.ConstructionMethods
 {
@@ -13,7 +14,7 @@ namespace DependencyInjection.ConstructionMethods
             Parameters = _constructorInfo.GetParameters().Select(p => new MethodParameter(p)).ToList();
         }
 
-        public override object Invoke(ConstructionMethodInvokationContext context)
+        public override object Invoke(InvokationContext context)
         {
             return _constructorInfo.Invoke(_parameterValues!);
         }

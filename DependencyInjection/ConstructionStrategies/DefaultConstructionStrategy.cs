@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq;
+using DependencyInjection.Common;
 using DependencyInjection.ConstructionMethods;
 
 namespace DependencyInjection.ConstructionStrategies

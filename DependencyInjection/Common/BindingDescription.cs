@@ -2,7 +2,7 @@
 using DependencyInjection.ConstructionStrategies;
 using DependencyInjection.MakeInstanceStrategies;
 
-namespace DependencyInjection
+namespace DependencyInjection.Common
 {
     internal class BindingDescription : IBindingDescription, IInstanceBindingDescription
     {

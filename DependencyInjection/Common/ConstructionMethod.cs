@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using System.Reflection;
 
-namespace DependencyInjection
+namespace DependencyInjection.Common
 {
-    abstract class ConstructionMethod
+    internal abstract class ConstructionMethod
     {
         protected object[]? _parameterValues;
 
@@ -20,10 +20,10 @@ namespace DependencyInjection
             _parameterValues = values;
         }
 
-        public abstract object Invoke(ConstructionMethodInvokationContext context);
+        public abstract object Invoke(InvokationContext context);
     }
 
-    class MethodParameter
+    internal class MethodParameter
     {
         public MethodParameter(ParameterInfo parameterInfo)
         {

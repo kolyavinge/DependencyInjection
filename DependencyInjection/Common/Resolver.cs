@@ -2,16 +2,16 @@
 using System.Collections.Generic;
 using System.Linq;
 
-namespace DependencyInjection
+namespace DependencyInjection.Common
 {
     internal class Resolver
     {
         private readonly BindingContainer _bindingContainer;
-        private readonly ConstructionMethodInvokationContext _invokationContext;
+        private readonly InvokationContext _invokationContext;
 
         public List<object> Dependencies { get; }
 
-        public Resolver(BindingContainer bindingContainer, ConstructionMethodInvokationContext invokationContext)
+        public Resolver(BindingContainer bindingContainer, InvokationContext invokationContext)
         {
             _bindingContainer = bindingContainer;
             _invokationContext = invokationContext;

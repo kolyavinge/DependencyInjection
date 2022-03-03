@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using DependencyInjection.Common;
 
 namespace DependencyInjection.ConstructionMethods
 {
@@ -12,7 +13,7 @@ namespace DependencyInjection.ConstructionMethods
             _makeFunction = makeFunction;
         }
 
-        public override object Invoke(ConstructionMethodInvokationContext context)
+        public override object Invoke(InvokationContext context)
         {
             return _makeFunction(context.ResolvingProvider);
         }
