@@ -20,7 +20,7 @@ namespace DependencyInjection.Common
             _parameterValues = values;
         }
 
-        public abstract object Invoke(InvokationContext context);
+        public abstract object Invoke(IInvokationContext context);
     }
 
     internal class MethodParameter

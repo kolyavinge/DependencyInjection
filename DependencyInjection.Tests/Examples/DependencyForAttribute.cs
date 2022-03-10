@@ -4,7 +4,11 @@ using System.Text;
 
 namespace DependencyInjection.Tests.Examples
 {
-    public class DependencyForAttributeImplementation : IDependencyForAttribute
+    public interface IDependencyForAttribute
+    {
+    }
+
+    public class DependencyForAttribute : IDependencyForAttribute
     {
     }
 }

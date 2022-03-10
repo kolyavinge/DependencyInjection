@@ -3,9 +3,9 @@ using DependencyInjection.Common;
 using DependencyInjection.Tests.Examples;
 using NUnit.Framework;
 
-namespace DependencyInjection.Tests
+namespace DependencyInjection.Tests.Common
 {
-    public class BindingDescriptionTest
+    internal class BindingDescriptionTest
     {
         [SetUp]
         public void Setup()
@@ -17,7 +17,7 @@ namespace DependencyInjection.Tests
         {
             try
             {
-                new BindingDescription(null, typeof(DependencyImplementation));
+                new BindingDescription(null, typeof(DisposableDependency));
                 Assert.Fail();
             }
             catch (ArgumentNullException exp)
@@ -31,7 +31,7 @@ namespace DependencyInjection.Tests
         {
             try
             {
-                new BindingDescription(typeof(IDependency), null);
+                new BindingDescription(typeof(IDisposableDependency), null);
                 Assert.Fail();
             }
             catch (ArgumentNullException exp)
@@ -43,7 +43,7 @@ namespace DependencyInjection.Tests
         [Test]
         public void Constructor()
         {
-            var description = new BindingDescription(typeof(IDependency), typeof(DependencyImplementation));
+            var description = new BindingDescription(typeof(IDisposableDependency), typeof(DisposableDependency));
             Assert.NotNull(description.ConstructionStrategy);
             Assert.NotNull(description.MakeInstanceStrategy);
         }

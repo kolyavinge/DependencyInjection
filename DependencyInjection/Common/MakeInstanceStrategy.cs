@@ -9,7 +9,7 @@ namespace DependencyInjection.Common
     {
         public abstract object? GetInstance();
 
-        public virtual object MakeInstance(ConstructionMethod constructionMethod, InvokationContext invokationContext)
+        public virtual object MakeInstance(ConstructionMethod constructionMethod, IInvokationContext invokationContext)
         {
             return constructionMethod.Invoke(invokationContext);
         }

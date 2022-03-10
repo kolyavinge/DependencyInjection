@@ -1,4 +1,7 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Reflection;
 using DependencyInjection.ConstructionStrategies;
 using DependencyInjection.MakeInstanceStrategies;
 
@@ -16,6 +19,8 @@ namespace DependencyInjection.Common
         public ConstructionStrategy ConstructionStrategy => _constructionStrategy ??= new DefaultConstructionStrategy(ImplementationType);
 
         public MakeInstanceStrategy MakeInstanceStrategy => _makeInstanceStrategy ??= DefaultMakeInstanceStrategy.Instance;
+
+        public IEnumerable<PropertyInfo> InjectedProperties => ImplementationType.GetProperties().Where(p => p.GetCustomAttributes(typeof(InjectAttribute), false).Any());
 
         public BindingDescription(Type dependencyType, Type implementationType)
         {

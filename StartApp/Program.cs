@@ -8,7 +8,7 @@ namespace StartApp
     {
         static void Main(string[] args)
         {
-            var container = new DependencyContainer();
+            var container = DependencyContainerFactory.MakeLiteContainer();
             container.Bind<IRepository, Repository>().ToSingleton();
             container.Bind<IDataContext, DataContext>();
 

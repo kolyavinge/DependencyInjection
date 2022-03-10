@@ -2,17 +2,21 @@
 using System.Collections.Generic;
 using System.Linq;
 using DependencyInjection.Common;
+using DependencyInjection.Resolving;
 
 namespace DependencyInjection
 {
-    public class DependencyContainer : IBindingProvider, IResolvingProvider, IDisposable
+    internal class DependencyContainer : IDependencyContainer
     {
         private readonly BindingContainer _bindingContainer;
+        private readonly Resolver _resolver;
         private readonly HashSet<IDisposable> _disposableInstances;
 
-        public DependencyContainer()
+        public DependencyContainer(Resolver resolver)
         {
             _bindingContainer = new BindingContainer();
+            _resolver = resolver;
+            _resolver.Init(_bindingContainer, new InvokationContext(this));
             _disposableInstances = new HashSet<IDisposable>();
         }
 
@@ -36,10 +40,8 @@ namespace DependencyInjection
 
         public TDependency Resolve<TDependency>()
         {
-            var resolver = new Resolver(_bindingContainer, new InvokationContext(this));
-            var instance = resolver.Resolve(typeof(TDependency));
-            if (instance is IDisposable disposable) _disposableInstances.Add(disposable);
-            foreach (var d in resolver.Dependencies.OfType<IDisposable>()) _disposableInstances.Add(d);
+            var instance = _resolver.Resolve(typeof(TDependency));
+            foreach (var inst in _resolver.Instances.OfType<IDisposable>()) _disposableInstances.Add(inst);
 
             return (TDependency)instance;
         }

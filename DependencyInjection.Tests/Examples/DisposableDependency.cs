@@ -1,10 +1,15 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace DependencyInjection.Tests.Examples
 {
-    public class DependencyImplementation : IDependency, IDisposable
+    public interface IDisposableDependency : IDisposable
+    {
+        public int Field { get; set; }
+
+        public bool IsDisposed { get; set; }
+    }
+
+    public class DisposableDependency : IDisposableDependency
     {
         public int Field { get; set; }
 

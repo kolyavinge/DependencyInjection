@@ -4,7 +4,12 @@ using System.Text;
 
 namespace DependencyInjection.Common
 {
-    internal class InvokationContext
+    internal interface IInvokationContext
+    {
+        IResolvingProvider ResolvingProvider { get; }
+    }
+
+    internal class InvokationContext : IInvokationContext
     {
         public IResolvingProvider ResolvingProvider { get; }
 

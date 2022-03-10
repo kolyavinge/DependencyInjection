@@ -13,7 +13,7 @@ namespace DependencyInjection.ConstructionMethods
             _makeFunction = makeFunction;
         }
 
-        public override object Invoke(InvokationContext context)
+        public override object Invoke(IInvokationContext context)
         {
             return _makeFunction(context.ResolvingProvider);
         }

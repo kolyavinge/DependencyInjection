@@ -14,7 +14,7 @@ namespace DependencyInjection.ConstructionMethods
             Parameters = _constructorInfo.GetParameters().Select(p => new MethodParameter(p)).ToList();
         }
 
-        public override object Invoke(InvokationContext context)
+        public override object Invoke(IInvokationContext context)
         {
             return _constructorInfo.Invoke(_parameterValues!);
         }

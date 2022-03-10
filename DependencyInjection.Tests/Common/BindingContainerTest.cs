@@ -3,9 +3,9 @@ using DependencyInjection.Common;
 using DependencyInjection.Tests.Examples;
 using NUnit.Framework;
 
-namespace DependencyInjection.Tests
+namespace DependencyInjection.Tests.Common
 {
-    public class BindingContainerTest
+    internal class BindingContainerTest
     {
         private BindingContainer _container;
 
@@ -48,35 +48,35 @@ namespace DependencyInjection.Tests
         {
             try
             {
-                _container.GetDescription(typeof(IDependency));
+                _container.GetDescription(typeof(IDisposableDependency));
                 Assert.Fail();
             }
             catch (DependencyContainerException exp)
             {
-                Assert.AreEqual("Type 'DependencyInjection.Tests.Examples.IDependency' has not been added.", exp.Message);
+                Assert.AreEqual("Type 'DependencyInjection.Tests.Examples.IDisposableDependency' has not been added.", exp.Message);
             }
         }
 
         [Test]
         public void AddGet_NotNull()
         {
-            _container.AddDescription(new BindingDescription(typeof(IDependency), typeof(DependencyImplementation)));
-            var obj = _container.GetDescription(typeof(IDependency));
+            _container.AddDescription(new BindingDescription(typeof(IDisposableDependency), typeof(DisposableDependency)));
+            var obj = _container.GetDescription(typeof(IDisposableDependency));
             Assert.NotNull(obj);
         }
 
         [Test]
         public void AddTwice_Error()
         {
-            _container.AddDescription(new BindingDescription(typeof(IDependency), typeof(DependencyImplementation)));
+            _container.AddDescription(new BindingDescription(typeof(IDisposableDependency), typeof(DisposableDependency)));
             try
             {
-                _container.AddDescription(new BindingDescription(typeof(IDependency), typeof(DependencyImplementation)));
+                _container.AddDescription(new BindingDescription(typeof(IDisposableDependency), typeof(DisposableDependency)));
                 Assert.Fail();
             }
             catch (DependencyContainerException exp)
             {
-                Assert.AreEqual("Type 'DependencyInjection.Tests.Examples.IDependency' has already been added.", exp.Message);
+                Assert.AreEqual("Type 'DependencyInjection.Tests.Examples.IDisposableDependency' has already been added.", exp.Message);
             }
         }
     }

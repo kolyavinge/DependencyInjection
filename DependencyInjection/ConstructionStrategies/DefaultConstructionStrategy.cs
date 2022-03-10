@@ -18,9 +18,6 @@ namespace DependencyInjection.ConstructionStrategies
             _constructionMethod = new ClassConstructorConstructionMethod(implementationType.GetConstructors().First());
         }
 
-        public override ConstructionMethod GetMethod()
-        {
-            return _constructionMethod;
-        }
+        public override ConstructionMethod Method => _constructionMethod;
     }
 }
