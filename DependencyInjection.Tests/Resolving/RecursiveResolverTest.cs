@@ -138,7 +138,7 @@ namespace DependencyInjection.Tests.Resolving
             }
             catch (DependencyContainerException exp)
             {
-                Assert.AreEqual("Type 'DependencyInjection.Tests.Examples.IConstructorsRecursiveA' cannot be resolved because it has recursive construction dependencies.", exp.Message);
+                Assert.AreEqual("Type 'DependencyInjection.Tests.Examples.IConstructorsRecursiveA' cannot be resolved because it has recursive dependencies.", exp.Message);
             }
 
             try
@@ -148,7 +148,34 @@ namespace DependencyInjection.Tests.Resolving
             }
             catch (DependencyContainerException exp)
             {
-                Assert.AreEqual("Type 'DependencyInjection.Tests.Examples.IConstructorsRecursiveB' cannot be resolved because it has recursive construction dependencies.", exp.Message);
+                Assert.AreEqual("Type 'DependencyInjection.Tests.Examples.IConstructorsRecursiveB' cannot be resolved because it has recursive dependencies.", exp.Message);
+            }
+        }
+
+        [Test]
+        public void RecursiveToMethod_Error()
+        {
+            Bind<IConstructorsRecursiveA>().ToMethod(provider => new ConstructorsRecursiveA(provider.Resolve<IConstructorsRecursiveB>()));
+            Bind<IConstructorsRecursiveB>().ToMethod(provider => new ConstructorsRecursiveB(provider.Resolve<IConstructorsRecursiveA>()));
+
+            try
+            {
+                Resolve<IConstructorsRecursiveA>();
+                Assert.Fail();
+            }
+            catch (DependencyContainerException exp)
+            {
+                Assert.AreEqual("Type 'DependencyInjection.Tests.Examples.IConstructorsRecursiveB' cannot be resolved because it has recursive dependencies.", exp.Message);
+            }
+
+            try
+            {
+                Resolve<IConstructorsRecursiveB>();
+                Assert.Fail();
+            }
+            catch (DependencyContainerException exp)
+            {
+                Assert.AreEqual("Type 'DependencyInjection.Tests.Examples.IConstructorsRecursiveB' cannot be resolved because it has recursive dependencies.", exp.Message);
             }
         }
 
