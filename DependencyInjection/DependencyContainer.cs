@@ -46,6 +46,14 @@ namespace DependencyInjection
             return (TDependency)instance;
         }
 
+        public object Resolve(Type dependencyType)
+        {
+            var instance = _resolver.Resolve(dependencyType);
+            foreach (var inst in _resolver.Instances.OfType<IDisposable>()) _disposableInstances.Add(inst);
+
+            return instance;
+        }
+
         public void Dispose()
         {
             foreach (var disposable in _disposableInstances) disposable.Dispose();
