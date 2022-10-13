@@ -1,16 +1,15 @@
 ﻿using System;
 
-namespace DependencyInjection
+namespace DependencyInjection;
+
+public interface IBindingDescription
 {
-    public interface IBindingDescription
-    {
-        IInstanceBindingDescription ToMethod(Func<IResolvingProvider, object> makeFunction);
+    IInstanceBindingDescription ToMethod(Func<IResolvingProvider, object> makeFunction);
 
-        void ToSingleton();
-    }
+    void ToSingleton();
+}
 
-    public interface IInstanceBindingDescription
-    {
-        void ToSingleton();
-    }
+public interface IInstanceBindingDescription
+{
+    void ToSingleton();
 }

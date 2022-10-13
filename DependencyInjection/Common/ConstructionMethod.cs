@@ -2,34 +2,33 @@
 using System.Collections.Generic;
 using System.Reflection;
 
-namespace DependencyInjection.Common
+namespace DependencyInjection.Common;
+
+internal abstract class ConstructionMethod
 {
-    internal abstract class ConstructionMethod
+    protected object[]? _parameterValues;
+
+    public List<MethodParameter> Parameters { get; set; }
+
+    public ConstructionMethod()
     {
-        protected object[]? _parameterValues;
-
-        public List<MethodParameter> Parameters { get; set; }
-
-        public ConstructionMethod()
-        {
-            Parameters = new List<MethodParameter>();
-        }
-
-        public void SetParameterValues(object[] values)
-        {
-            _parameterValues = values;
-        }
-
-        public abstract object Invoke(IInvokationContext context);
+        Parameters = new List<MethodParameter>();
     }
 
-    internal class MethodParameter
+    public void SetParameterValues(object[] values)
     {
-        public MethodParameter(ParameterInfo parameterInfo)
-        {
-            Type = parameterInfo.ParameterType;
-        }
-
-        public Type Type { get; }
+        _parameterValues = values;
     }
+
+    public abstract object Invoke(IInvokationContext context);
+}
+
+internal class MethodParameter
+{
+    public MethodParameter(ParameterInfo parameterInfo)
+    {
+        Type = parameterInfo.ParameterType;
+    }
+
+    public Type Type { get; }
 }

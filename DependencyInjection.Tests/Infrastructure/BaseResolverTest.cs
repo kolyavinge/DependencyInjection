@@ -1,4 +1,5 @@
-﻿using DependencyInjection.Common;
+﻿using System;
+using DependencyInjection.Common;
 using DependencyInjection.Resolving;
 using Moq;
 
@@ -22,6 +23,11 @@ namespace DependencyInjection.Tests.Infrastructure
         public T Resolve<T>()
         {
             return (T)_resolver.Resolve(typeof(T));
+        }
+
+        public object Resolve(Type dependencyType)
+        {
+            return _resolver.Resolve(dependencyType);
         }
 
         protected BindingDescription Bind<TDependencyType, TImplementationType>()

@@ -1,21 +1,16 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿namespace DependencyInjection.Common;
 
-namespace DependencyInjection.Common
+internal interface IInvokationContext
 {
-    internal interface IInvokationContext
-    {
-        IResolvingProvider ResolvingProvider { get; }
-    }
+    IResolvingProvider ResolvingProvider { get; }
+}
 
-    internal class InvokationContext : IInvokationContext
-    {
-        public IResolvingProvider ResolvingProvider { get; }
+internal class InvokationContext : IInvokationContext
+{
+    public IResolvingProvider ResolvingProvider { get; }
 
-        public InvokationContext(IResolvingProvider resolvingProvider)
-        {
-            ResolvingProvider = resolvingProvider;
-        }
+    public InvokationContext(IResolvingProvider resolvingProvider)
+    {
+        ResolvingProvider = resolvingProvider;
     }
 }

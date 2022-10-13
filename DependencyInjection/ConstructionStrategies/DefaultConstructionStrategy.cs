@@ -3,21 +3,20 @@ using System.Linq;
 using DependencyInjection.Common;
 using DependencyInjection.ConstructionMethods;
 
-namespace DependencyInjection.ConstructionStrategies
+namespace DependencyInjection.ConstructionStrategies;
+
+internal class DefaultConstructionStrategy : ConstructionStrategy
 {
-    internal class DefaultConstructionStrategy : ConstructionStrategy
+    private readonly ConstructionMethod _constructionMethod;
+
+    public DefaultConstructionStrategy(Type implementationType)
     {
-        private readonly ConstructionMethod _constructionMethod;
-
-        public DefaultConstructionStrategy(Type implementationType)
+        if (implementationType.IsInterface)
         {
-            if (implementationType.IsInterface)
-            {
-                throw new DependencyContainerException($"Type '{implementationType}' cannot be constructed");
-            }
-            _constructionMethod = new ClassConstructorConstructionMethod(implementationType.GetConstructors().First());
+            throw new DependencyContainerException($"Type '{implementationType}' cannot be constructed");
         }
-
-        public override ConstructionMethod Method => _constructionMethod;
+        _constructionMethod = new ClassConstructorConstructionMethod(implementationType.GetConstructors().First());
     }
+
+    public override ConstructionMethod Method => _constructionMethod;
 }

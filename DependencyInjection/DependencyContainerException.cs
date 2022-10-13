@@ -1,13 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 
-namespace DependencyInjection
+namespace DependencyInjection;
+
+public class DependencyContainerException : Exception
 {
-    public class DependencyContainerException : Exception
+    public DependencyContainerException(string message) : base(message)
     {
-        public DependencyContainerException(string message) : base(message)
-        {
-        }
     }
 }

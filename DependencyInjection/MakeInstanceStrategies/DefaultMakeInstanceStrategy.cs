@@ -1,16 +1,15 @@
 ﻿using DependencyInjection.Common;
 
-namespace DependencyInjection.MakeInstanceStrategies
+namespace DependencyInjection.MakeInstanceStrategies;
+
+internal class DefaultMakeInstanceStrategy : MakeInstanceStrategy
 {
-    internal class DefaultMakeInstanceStrategy : MakeInstanceStrategy
+    public static readonly DefaultMakeInstanceStrategy Instance = new();
+
+    private DefaultMakeInstanceStrategy() { }
+
+    public override object? GetInstance()
     {
-        public static readonly DefaultMakeInstanceStrategy Instance = new();
-
-        private DefaultMakeInstanceStrategy() { }
-
-        public override object? GetInstance()
-        {
-            return null;
-        }
+        return null;
     }
 }

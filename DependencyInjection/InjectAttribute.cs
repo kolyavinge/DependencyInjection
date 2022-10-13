@@ -1,11 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 
-namespace DependencyInjection
+namespace DependencyInjection;
+
+[AttributeUsage(AttributeTargets.Property)]
+public class InjectAttribute : Attribute
 {
-    [AttributeUsage(AttributeTargets.Property)]
-    public class InjectAttribute : Attribute
-    {
-    }
 }

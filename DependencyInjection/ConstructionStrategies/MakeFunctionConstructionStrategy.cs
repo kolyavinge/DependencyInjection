@@ -2,21 +2,20 @@
 using DependencyInjection.Common;
 using DependencyInjection.ConstructionMethods;
 
-namespace DependencyInjection.ConstructionStrategies
+namespace DependencyInjection.ConstructionStrategies;
+
+internal class MakeFunctionConstructionStrategy : ConstructionStrategy
 {
-    internal class MakeFunctionConstructionStrategy : ConstructionStrategy
+    private readonly ConstructionMethod _constructionMethod;
+
+    public MakeFunctionConstructionStrategy(Func<IResolvingProvider, object> makeFunction)
     {
-        private readonly ConstructionMethod _constructionMethod;
-
-        public MakeFunctionConstructionStrategy(Func<IResolvingProvider, object> makeFunction)
+        if (makeFunction == null)
         {
-            if (makeFunction == null)
-            {
-                throw new DependencyContainerException("MakeFunction cannot be null");
-            }
-            _constructionMethod = new MakeFunctionConstructionMethod(makeFunction);
+            throw new DependencyContainerException("MakeFunction cannot be null");
         }
-
-        public override ConstructionMethod Method => _constructionMethod;
+        _constructionMethod = new MakeFunctionConstructionMethod(makeFunction);
     }
+
+    public override ConstructionMethod Method => _constructionMethod;
 }

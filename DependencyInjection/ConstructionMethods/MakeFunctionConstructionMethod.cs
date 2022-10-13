@@ -1,21 +1,19 @@
 ﻿using System;
-using System.Collections.Generic;
 using DependencyInjection.Common;
 
-namespace DependencyInjection.ConstructionMethods
+namespace DependencyInjection.ConstructionMethods;
+
+internal class MakeFunctionConstructionMethod : ConstructionMethod
 {
-    internal class MakeFunctionConstructionMethod : ConstructionMethod
+    private readonly Func<IResolvingProvider, object> _makeFunction;
+
+    public MakeFunctionConstructionMethod(Func<IResolvingProvider, object> makeFunction)
     {
-        private readonly Func<IResolvingProvider, object> _makeFunction;
+        _makeFunction = makeFunction;
+    }
 
-        public MakeFunctionConstructionMethod(Func<IResolvingProvider, object> makeFunction)
-        {
-            _makeFunction = makeFunction;
-        }
-
-        public override object Invoke(IInvokationContext context)
-        {
-            return _makeFunction(context.ResolvingProvider);
-        }
+    public override object Invoke(IInvokationContext context)
+    {
+        return _makeFunction(context.ResolvingProvider);
     }
 }

@@ -1,7 +1,6 @@
-﻿namespace DependencyInjection
+﻿namespace DependencyInjection;
+
+public abstract class InjectModule
 {
-    public abstract class InjectModule
-    {
-        public abstract void Init(IBindingProvider bindingProvider);
-    }
+    public abstract void Init(IBindingProvider bindingProvider);
 }

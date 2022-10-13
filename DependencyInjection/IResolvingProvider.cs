@@ -1,11 +1,10 @@
 ﻿using System;
 
-namespace DependencyInjection
-{
-    public interface IResolvingProvider
-    {
-        TDependency Resolve<TDependency>();
+namespace DependencyInjection;
 
-        object Resolve(Type dependencyType);
-    }
+public interface IResolvingProvider
+{
+    TDependency Resolve<TDependency>();
+
+    object Resolve(Type dependencyType);
 }

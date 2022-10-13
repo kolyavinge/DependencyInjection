@@ -1,13 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿namespace DependencyInjection;
 
-namespace DependencyInjection
+public interface IBindingProvider
 {
-    public interface IBindingProvider
-    {
-        IBindingDescription Bind<TDependency, TImplementation>();
+    IBindingDescription Bind<TDependency, TImplementation>();
 
-        IBindingDescription Bind<TDependency>();
-    }
+    IBindingDescription Bind<TDependency>();
 }
