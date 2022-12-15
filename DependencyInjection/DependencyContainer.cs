@@ -38,6 +38,19 @@ internal class DependencyContainer : IDependencyContainer
         return Bind<TDependency, TDependency>();
     }
 
+    public IBindingDescription Bind(Type dependencyType, Type implementationType)
+    {
+        var description = new BindingDescription(dependencyType, implementationType);
+        _bindingContainer.AddDescription(description);
+
+        return description;
+    }
+
+    public IBindingDescription Bind(Type dependencyType)
+    {
+        return Bind(dependencyType, dependencyType);
+    }
+
     public TDependency Resolve<TDependency>()
     {
         var instance = _resolver.Resolve(typeof(TDependency));
