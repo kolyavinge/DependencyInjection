@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace DependencyInjection.Utils;
 
-public static class EnumerableExt
+internal static class EnumerableExt
 {
     public static void Each<T>(this IEnumerable<T> collection, Action<T> action)
     {
