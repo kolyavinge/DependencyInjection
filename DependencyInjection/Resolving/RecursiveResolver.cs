@@ -22,7 +22,7 @@ internal class RecursiveResolver : Resolver
         Depth++;
         var description = _bindingContainer!.GetDescription(dependencyType);
         var instance = description.MakeInstanceStrategy.GetInstance();
-        if (instance == null)
+        if (instance is null)
         {
             _resolvingChain.Add(dependencyType);
             var constructionMethod = description.ConstructionStrategy.Method;

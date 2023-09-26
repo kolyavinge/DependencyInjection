@@ -9,7 +9,7 @@ internal class BindingContainer
 
     public void AddDescription(BindingDescription binding)
     {
-        if (binding == null)
+        if (binding is null)
         {
             throw new ArgumentNullException(nameof(binding));
         }
@@ -23,7 +23,7 @@ internal class BindingContainer
 
     public BindingDescription GetDescription(Type dependencyType)
     {
-        if (dependencyType == null)
+        if (dependencyType is null)
         {
             throw new ArgumentNullException(nameof(dependencyType));
         }

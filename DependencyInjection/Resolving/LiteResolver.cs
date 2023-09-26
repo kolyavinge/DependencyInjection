@@ -10,7 +10,7 @@ internal class LiteResolver : Resolver
         Depth++;
         var description = _bindingContainer!.GetDescription(dependencyType);
         var instance = description.MakeInstanceStrategy.GetInstance();
-        if (instance == null)
+        if (instance is null)
         {
             var constructionMethod = description.ConstructionStrategy.Method;
             var resolvedParams = constructionMethod.Parameters.Select(param => TryResolve(param.Type)).ToArray();

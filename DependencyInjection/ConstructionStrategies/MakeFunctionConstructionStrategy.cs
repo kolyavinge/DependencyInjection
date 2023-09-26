@@ -10,7 +10,7 @@ internal class MakeFunctionConstructionStrategy : ConstructionStrategy
 
     public MakeFunctionConstructionStrategy(Func<IResolvingProvider, object> makeFunction)
     {
-        if (makeFunction == null)
+        if (makeFunction is null)
         {
             throw new DependencyContainerException("MakeFunction cannot be null");
         }
